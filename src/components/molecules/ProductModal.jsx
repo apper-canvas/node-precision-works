@@ -112,10 +112,10 @@ const specs = typeof product.specifications_c === 'string'
                             alt={`${product.name_c} ${index + 1}`}
                             className="w-full h-full object-cover"
                           />
-                        </div>
+</div>
                       ))}
                     </div>
-                    )}
+                  }
                   </div>
 
                   <div className="space-y-6">
