@@ -59,7 +59,14 @@ const specs = typeof product.specifications_c === 'string'
     };
   }, [isOpen]);
 
-  if (!product) return null;
+if (!product) return null;
+
+  // Parse specifications for display (same logic as downloadSpecs function)
+  const specs = product?.specifications_c 
+    ? (typeof product.specifications_c === 'string' 
+        ? JSON.parse(product.specifications_c) 
+        : product.specifications_c)
+    : {};
 
   return (
     <AnimatePresence>
