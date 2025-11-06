@@ -17,7 +17,14 @@ if (!product?.specifications_c) {
       let specContent = `${product.name} - Technical Specifications\n`;
       specContent += `${'='.repeat(50)}\n\n`;
 const specs = typeof product.specifications_c === 'string' 
-        ? JSON.parse(product.specifications_c) 
+        ? (() => {
+            try {
+              return JSON.parse(product.specifications_c);
+            } catch (error) {
+              console.error('Failed to parse specifications JSON:', error);
+              return product.specifications_c;
+            }
+          })()
         : product.specifications_c;
       
       // Add all available specifications
@@ -62,9 +69,16 @@ const specs = typeof product.specifications_c === 'string'
 if (!product) return null;
 
   // Parse specifications for display (same logic as downloadSpecs function)
-  const specs = product?.specifications_c 
+const specs = product?.specifications_c 
     ? (typeof product.specifications_c === 'string' 
-        ? JSON.parse(product.specifications_c) 
+        ? (() => {
+            try {
+              return JSON.parse(product.specifications_c);
+            } catch (error) {
+              console.error('Failed to parse specifications JSON:', error);
+              return {};
+            }
+          })()
         : product.specifications_c)
     : {};
 
