@@ -115,7 +115,7 @@ const specs = typeof product.specifications_c === 'string'
 </div>
                       ))}
                     </div>
-                  }
+                  )
                   </div>
 
                   <div className="space-y-6">
