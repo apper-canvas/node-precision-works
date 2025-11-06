@@ -63,16 +63,16 @@ function BlogInsights() {
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
       filtered = filtered.filter(blog =>
-        blog.title.toLowerCase().includes(search) ||
-        blog.excerpt.toLowerCase().includes(search) ||
-        blog.content.toLowerCase().includes(search) ||
-        blog.tags.some(tag => tag.toLowerCase().includes(search))
+blog.title_c.toLowerCase().includes(search) ||
+        blog.excerpt_c.toLowerCase().includes(search) ||
+        blog.content_c.toLowerCase().includes(search) ||
+        blog.tags_c.split(',').some(tag => tag.toLowerCase().includes(search))
       );
     }
 
     // Apply category filter
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(blog => blog.category === selectedCategory);
+if (selectedCategory !== 'all') {
+      filtered = filtered.filter(blog => blog.category_c === selectedCategory);
     }
 
     setFilteredBlogs(filtered);

@@ -1,62 +1,271 @@
-import productsData from "@/services/mockData/products.json";
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+import { getApperClient } from "@/services/apperClient";
+import { toast } from "react-toastify";
+import React from "react";
+import Error from "@/components/ui/Error";
 
 export const productService = {
   async getAll() {
-    await delay(300);
-    return [...productsData];
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "name_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "description_c" }},
+          { field: { Name: "specifications_c" }},
+          { field: { Name: "materials_c" }},
+          { field: { Name: "lead_time_c" }},
+          { field: { Name: "technical_drawing_c" }}
+        ]
+      };
+
+      const response = await apperClient.fetchRecords('product_c', params);
+      
+      if (!response?.data?.length) {
+        return [];
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   async getById(id) {
-    await delay(200);
-    const product = productsData.find(p => p.Id === parseInt(id));
-    if (!product) {
-      throw new Error("Product not found");
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "name_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "description_c" }},
+          { field: { Name: "specifications_c" }},
+          { field: { Name: "materials_c" }},
+          { field: { Name: "lead_time_c" }},
+          { field: { Name: "technical_drawing_c" }}
+        ]
+      };
+
+      const response = await apperClient.getRecordById('product_c', parseInt(id), params);
+      
+      if (!response?.data) {
+        return null;
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching product ${id}:`, error?.response?.data?.message || error);
+      return null;
     }
-    return { ...product };
   },
 
   async getByCategory(category) {
-    await delay(250);
-    return productsData.filter(p => p.category === category).map(p => ({ ...p }));
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "name_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "description_c" }},
+          { field: { Name: "specifications_c" }},
+          { field: { Name: "materials_c" }},
+          { field: { Name: "lead_time_c" }},
+          { field: { Name: "technical_drawing_c" }}
+        ],
+        where: [{
+          FieldName: "category_c",
+          Operator: "ExactMatch",
+          Values: [category]
+        }]
+      };
+
+      const response = await apperClient.fetchRecords('product_c', params);
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching products by category:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   async getCategories() {
-    await delay(150);
-    const categories = [...new Set(productsData.map(p => p.category))];
-    return categories;
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "category_c" }}
+        ],
+        groupBy: ["category_c"]
+      };
+
+      const response = await apperClient.fetchRecords('product_c', params);
+      
+      if (!response?.data?.length) {
+        return [];
+      }
+      
+      return [...new Set(response.data.map(p => p.category_c))];
+    } catch (error) {
+      console.error("Error fetching product categories:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   async create(productData) {
-    await delay(400);
-    const maxId = Math.max(...productsData.map(p => p.Id));
-    const newProduct = {
-      ...productData,
-      Id: maxId + 1
-    };
-    productsData.push(newProduct);
-    return { ...newProduct };
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        records: [{
+          name_c: productData.name,
+          category_c: productData.category,
+          description_c: productData.description,
+          specifications_c: typeof productData.specifications === 'object' 
+            ? JSON.stringify(productData.specifications) 
+            : productData.specifications,
+          materials_c: Array.isArray(productData.materials) 
+            ? productData.materials.join(', ') 
+            : productData.materials,
+          lead_time_c: productData.leadTime,
+          technical_drawing_c: productData.technicalDrawing
+        }]
+      };
+
+      const response = await apperClient.createRecord('product_c', params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to create ${failed.length} products:${failed.map(f => f.message).join(', ')}`);
+          failed.forEach(record => {
+            record.errors?.forEach(error => toast.error(`${error.fieldLabel}: ${error}`));
+            if (record.message) toast.error(record.message);
+          });
+        }
+        
+        return successful.length > 0 ? successful[0].data : null;
+      }
+    } catch (error) {
+      console.error("Error creating product:", error?.response?.data?.message || error);
+      return null;
+    }
   },
 
   async update(id, productData) {
-    await delay(300);
-    const index = productsData.findIndex(p => p.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Product not found");
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          name_c: productData.name,
+          category_c: productData.category,
+          description_c: productData.description,
+          specifications_c: typeof productData.specifications === 'object' 
+            ? JSON.stringify(productData.specifications) 
+            : productData.specifications,
+          materials_c: Array.isArray(productData.materials) 
+            ? productData.materials.join(', ') 
+            : productData.materials,
+          lead_time_c: productData.leadTime,
+          technical_drawing_c: productData.technicalDrawing
+        }]
+      };
+
+      const response = await apperClient.updateRecord('product_c', params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to update ${failed.length} products:${failed.map(f => f.message).join(', ')}`);
+          failed.forEach(record => {
+            record.errors?.forEach(error => toast.error(`${error.fieldLabel}: ${error}`));
+            if (record.message) toast.error(record.message);
+          });
+        }
+        
+        return successful.length > 0 ? successful[0].data : null;
+      }
+    } catch (error) {
+      console.error("Error updating product:", error?.response?.data?.message || error);
+      return null;
     }
-    productsData[index] = { ...productsData[index], ...productData };
-    return { ...productsData[index] };
   },
 
   async delete(id) {
-    await delay(250);
-    const index = productsData.findIndex(p => p.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Product not found");
+    try {
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = { 
+        RecordIds: [parseInt(id)]
+      };
+
+      const response = await apperClient.deleteRecord('product_c', params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return false;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to delete ${failed.length} products:${failed.map(f => f.message).join(', ')}`);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+        
+        return successful.length > 0;
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error?.response?.data?.message || error);
+      return false;
     }
-    const deletedProduct = { ...productsData[index] };
-    productsData.splice(index, 1);
-    return deletedProduct;
-  }
+}
 };

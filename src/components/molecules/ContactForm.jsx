@@ -8,7 +8,7 @@ import Select from "@/components/atoms/Select";
 import { contactService } from "@/services/api/contactService";
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     inquiryType: "",
     companyName: "",
     contactName: "",
@@ -67,19 +67,21 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      await contactService.submitInquiry(formData);
-      toast.success("Your inquiry has been submitted successfully! We'll respond within 24 hours.");
-      
-      // Reset form
-      setFormData({
-        inquiryType: "",
-        companyName: "",
-        contactName: "",
-        email: "",
-        phone: "",
-        message: "",
-        attachments: []
-      });
+const result = await contactService.submitInquiry(formData);
+      if (result) {
+        toast.success("Your inquiry has been submitted successfully! We'll respond within 24 hours.");
+        
+        // Reset form
+        setFormData({
+          inquiryType: "",
+          companyName: "",
+          contactName: "",
+          email: "",
+          phone: "",
+          message: "",
+          attachments: []
+        });
+      }
     } catch (error) {
       toast.error("There was an error submitting your inquiry. Please try again.");
     } finally {

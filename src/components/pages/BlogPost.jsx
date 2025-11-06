@@ -30,10 +30,10 @@ function BlogPost() {
 
       const result = await blogService.getById(id);
       
-      if (result.success) {
+if (result.success) {
         setBlog(result.data);
         // Load related posts from same category
-        loadRelatedPosts(result.data.category);
+        loadRelatedPosts(result.data.category_c);
       } else {
         setError(result.error || 'Blog post not found');
         if (result.error === 'Blog post not found') {
@@ -139,30 +139,30 @@ function BlogPost() {
                 variant="secondary" 
                 className="bg-accent-500 text-white border-accent-600"
               >
-                {blog.category}
+{blog.category_c}
               </Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              {blog.title}
+              {blog.title_c}
             </h1>
             
-            <p className="text-xl text-primary-100 mb-6 leading-relaxed">
-              {blog.excerpt}
+<p className="text-xl text-primary-100 mb-6 leading-relaxed">
+              {blog.excerpt_c}
             </p>
             
             <div className="flex flex-wrap items-center gap-4 text-primary-200">
               <div className="flex items-center">
                 <ApperIcon name="User" size={16} className="mr-2" />
-                {blog.author}
+{blog.author_c}
               </div>
               <div className="flex items-center">
                 <ApperIcon name="Calendar" size={16} className="mr-2" />
-                {formatDate(blog.publishedAt)}
+                {formatDate(blog.published_at_c)}
               </div>
               <div className="flex items-center">
                 <ApperIcon name="Clock" size={16} className="mr-2" />
-                {blog.readTime} min read
+                {blog.read_time_c} min read
               </div>
             </div>
           </motion.div>
@@ -180,14 +180,14 @@ function BlogPost() {
           >
             <div 
               className="text-gray-700 leading-relaxed"
-              dangerouslySetInnerHTML={{ 
-                __html: `<p class="mb-4 text-gray-700 leading-relaxed">${formatContent(blog.content)}</p>`
+dangerouslySetInnerHTML={{ 
+                __html: `<p class="mb-4 text-gray-700 leading-relaxed">${formatContent(blog.content_c)}</p>`
               }}
             />
           </motion.article>
 
           {/* Tags Section */}
-          {blog.tags && blog.tags.length > 0 && (
+{blog.tags_c && blog.tags_c.split(',').length > 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -196,7 +196,7 @@ function BlogPost() {
             >
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Tags</h3>
               <div className="flex flex-wrap gap-2">
-                {blog.tags.map((tag, index) => (
+                {blog.tags_c.split(',').map((tag, index) => (
                   <Badge key={index} variant="outline">
                     {tag}
                   </Badge>
@@ -227,18 +227,18 @@ function BlogPost() {
                     to={`/insights/${relatedBlog.Id}`}
                     className="card p-6 hover:scale-105 transition-all duration-200"
                   >
-                    <Badge variant="outline" className="mb-3">
-                      {relatedBlog.category}
+<Badge variant="outline" className="mb-3">
+                      {relatedBlog.category_c}
                     </Badge>
                     <h3 className="text-xl font-semibold text-gray-800 mb-3 line-clamp-2">
-                      {relatedBlog.title}
+                      {relatedBlog.title_c}
                     </h3>
                     <p className="text-gray-600 mb-4 line-clamp-3">
-                      {relatedBlog.excerpt}
+                      {relatedBlog.excerpt_c}
                     </p>
                     <div className="flex items-center text-sm text-gray-500">
                       <ApperIcon name="Clock" size={14} className="mr-1" />
-                      {relatedBlog.readTime} min read
+                      {relatedBlog.read_time_c} min read
                     </div>
                   </Link>
                 ))}

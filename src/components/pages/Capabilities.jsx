@@ -19,7 +19,7 @@ const Capabilities = () => {
     try {
       setLoading(true);
       setError("");
-      const data = await capabilityService.getAll();
+const data = await capabilityService.getAll();
       setCapabilities(data);
     } catch (err) {
       setError("Failed to load capabilities. Please try again.");

@@ -19,7 +19,7 @@ const Quality = () => {
     try {
       setLoading(true);
       setError("");
-      const data = await certificationService.getAll();
+const data = await certificationService.getAll();
       setCertifications(data);
     } catch (err) {
       setError("Failed to load certifications. Please try again.");

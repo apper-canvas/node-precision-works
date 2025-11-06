@@ -1,43 +1,93 @@
-import mockBlogs from '@/services/mockData/blogs.json';
-
-// Mock service for blog operations
-// Will be replaced with database integration when tables become available
-let blogsData = [...mockBlogs];
+import { getApperClient } from '@/services/apperClient';
 
 export const blogService = {
   /**
    * Get all blog posts with optional filtering
    */
   async getAll(filters = {}) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
     try {
-      let filteredBlogs = [...blogsData];
-      
-      // Apply search filter
-      if (filters.search) {
-        const searchTerm = filters.search.toLowerCase();
-        filteredBlogs = filteredBlogs.filter(blog => 
-          blog.title.toLowerCase().includes(searchTerm) ||
-          blog.excerpt.toLowerCase().includes(searchTerm) ||
-          blog.content.toLowerCase().includes(searchTerm)
-        );
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
       }
-      
-      // Apply category filter
-      if (filters.category && filters.category !== 'all') {
-        filteredBlogs = filteredBlogs.filter(blog => blog.category === filters.category);
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" }},
+          { field: { Name: "content_c" }},
+          { field: { Name: "excerpt_c" }},
+          { field: { Name: "author_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "featured_c" }},
+          { field: { Name: "published_at_c" }},
+          { field: { Name: "read_time_c" }},
+          { field: { Name: "tags_c" }}
+        ],
+        orderBy: [{
+          fieldName: "published_at_c",
+          sorttype: "DESC"
+        }]
+      };
+
+      // Apply filters if provided
+      if (filters.search || filters.category) {
+        params.whereGroups = [{
+          operator: "OR",
+          subGroups: []
+        }];
+
+        if (filters.search) {
+          const searchConditions = {
+            conditions: [
+              {
+                fieldName: "title_c",
+                operator: "Contains",
+                values: [filters.search]
+              },
+              {
+                fieldName: "excerpt_c", 
+                operator: "Contains",
+                values: [filters.search]
+              },
+              {
+                fieldName: "content_c",
+                operator: "Contains", 
+                values: [filters.search]
+              }
+            ],
+            operator: "OR"
+          };
+          params.whereGroups[0].subGroups.push(searchConditions);
+        }
+
+        if (filters.category && filters.category !== 'all') {
+          const categoryConditions = {
+            conditions: [{
+              fieldName: "category_c",
+              operator: "ExactMatch",
+              values: [filters.category]
+            }],
+            operator: "OR"
+          };
+          params.whereGroups[0].subGroups.push(categoryConditions);
+        }
       }
+
+      const response = await apperClient.fetchRecords('blog_c', params);
       
-      // Sort by date (newest first)
-      filteredBlogs.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      
+      if (!response?.data) {
+        return {
+          success: true,
+          data: []
+        };
+      }
+
       return {
         success: true,
-        data: filteredBlogs
+        data: response.data
       };
     } catch (error) {
+      console.error("Error fetching blog posts:", error?.response?.data?.message || error);
       return {
         success: false,
         error: 'Failed to fetch blog posts'
@@ -49,24 +99,41 @@ export const blogService = {
    * Get a single blog post by ID
    */
   async getById(id) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
     try {
-      const blog = blogsData.find(b => b.Id === parseInt(id));
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" }},
+          { field: { Name: "content_c" }},
+          { field: { Name: "excerpt_c" }},
+          { field: { Name: "author_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "featured_c" }},
+          { field: { Name: "published_at_c" }},
+          { field: { Name: "read_time_c" }},
+          { field: { Name: "tags_c" }}
+        ]
+      };
+
+      const response = await apperClient.getRecordById('blog_c', parseInt(id), params);
       
-      if (!blog) {
+      if (!response?.data) {
         return {
           success: false,
           error: 'Blog post not found'
         };
       }
-      
+
       return {
         success: true,
-        data: blog
+        data: response.data
       };
     } catch (error) {
+      console.error(`Error fetching blog post ${id}:`, error?.response?.data?.message || error);
       return {
         success: false,
         error: 'Failed to fetch blog post'
@@ -78,19 +145,43 @@ export const blogService = {
    * Get blog posts by category
    */
   async getByCategory(category) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 250));
-    
     try {
-      const filteredBlogs = blogsData
-        .filter(blog => blog.category === category)
-        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" }},
+          { field: { Name: "content_c" }},
+          { field: { Name: "excerpt_c" }},
+          { field: { Name: "author_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "featured_c" }},
+          { field: { Name: "published_at_c" }},
+          { field: { Name: "read_time_c" }},
+          { field: { Name: "tags_c" }}
+        ],
+        where: [{
+          FieldName: "category_c",
+          Operator: "ExactMatch",
+          Values: [category]
+        }],
+        orderBy: [{
+          fieldName: "published_at_c",
+          sorttype: "DESC"
+        }]
+      };
+
+      const response = await apperClient.fetchRecords('blog_c', params);
       
       return {
         success: true,
-        data: filteredBlogs
+        data: response.data || []
       };
     } catch (error) {
+      console.error("Error fetching blog posts by category:", error?.response?.data?.message || error);
       return {
         success: false,
         error: 'Failed to fetch blog posts by category'
@@ -102,20 +193,47 @@ export const blogService = {
    * Get featured blog posts
    */
   async getFeatured() {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
     try {
-      const featuredBlogs = blogsData
-        .filter(blog => blog.featured)
-        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-        .slice(0, 3);
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" }},
+          { field: { Name: "content_c" }},
+          { field: { Name: "excerpt_c" }},
+          { field: { Name: "author_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "featured_c" }},
+          { field: { Name: "published_at_c" }},
+          { field: { Name: "read_time_c" }},
+          { field: { Name: "tags_c" }}
+        ],
+        where: [{
+          FieldName: "featured_c",
+          Operator: "ExactMatch",
+          Values: [true]
+        }],
+        orderBy: [{
+          fieldName: "published_at_c",
+          sorttype: "DESC"
+        }],
+        pagingInfo: {
+          limit: 3,
+          offset: 0
+        }
+      };
+
+      const response = await apperClient.fetchRecords('blog_c', params);
       
       return {
         success: true,
-        data: featuredBlogs
+        data: response.data || []
       };
     } catch (error) {
+      console.error("Error fetching featured blog posts:", error?.response?.data?.message || error);
       return {
         success: false,
         error: 'Failed to fetch featured blog posts'
@@ -127,19 +245,42 @@ export const blogService = {
    * Get recent blog posts
    */
   async getRecent(limit = 5) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
     try {
-      const recentBlogs = blogsData
-        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-        .slice(0, limit);
+      const apperClient = getApperClient();
+      if (!apperClient) {
+        throw new Error('ApperClient not initialized');
+      }
+
+      const params = {
+        fields: [
+          { field: { Name: "title_c" }},
+          { field: { Name: "content_c" }},
+          { field: { Name: "excerpt_c" }},
+          { field: { Name: "author_c" }},
+          { field: { Name: "category_c" }},
+          { field: { Name: "featured_c" }},
+          { field: { Name: "published_at_c" }},
+          { field: { Name: "read_time_c" }},
+          { field: { Name: "tags_c" }}
+        ],
+        orderBy: [{
+          fieldName: "published_at_c",
+          sorttype: "DESC"
+        }],
+        pagingInfo: {
+          limit: limit,
+          offset: 0
+        }
+      };
+
+      const response = await apperClient.fetchRecords('blog_c', params);
       
       return {
         success: true,
-        data: recentBlogs
+        data: response.data || []
       };
     } catch (error) {
+      console.error("Error fetching recent blog posts:", error?.response?.data?.message || error);
       return {
         success: false,
         error: 'Failed to fetch recent blog posts'

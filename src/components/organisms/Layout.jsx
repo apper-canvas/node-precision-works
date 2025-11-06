@@ -11,8 +11,8 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <div id="authentication"></div>
     </div>
   );
 };
-
 export default Layout;

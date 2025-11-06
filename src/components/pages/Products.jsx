@@ -54,17 +54,15 @@ const Products = () => {
   const filterProducts = () => {
     let filtered = products;
 
-    if (selectedCategory) {
-      filtered = filtered.filter(product => product.category === selectedCategory);
+if (selectedCategory) {
+      filtered = filtered.filter(product => product.category_c === selectedCategory);
     }
 
-    if (searchTerm) {
+if (searchTerm) {
       filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.materials.some(material => 
-          material.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        product.name_c.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description_c.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.materials_c.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 

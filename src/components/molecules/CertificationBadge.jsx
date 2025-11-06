@@ -1,64 +1,71 @@
-import React from "react";
-import { motion } from "framer-motion";
-import ApperIcon from "@/components/ApperIcon";
+import React from 'react';
+import { motion } from 'framer-motion';
+import ApperIcon from '@/components/ApperIcon';
 
 const CertificationBadge = ({ certification, index }) => {
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short"
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
   const isExpiringSoon = (dateString) => {
-    const expiryDate = new Date(dateString);
-    const sixMonthsFromNow = new Date();
-    sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
-    return expiryDate < sixMonthsFromNow;
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = date - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= 90 && diffDays > 0;
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="card p-6 text-center"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="card p-6 hover:scale-105 transition-all duration-200"
     >
-      <div className="mb-4">
-        <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-full mx-auto flex items-center justify-center mb-3">
-          <ApperIcon name="Award" size={28} className="text-primary-600" />
+      <div className="flex items-start space-x-4">
+        <div className="bg-gradient-to-br from-accent-100 to-primary-100 p-3 rounded-lg flex-shrink-0">
+          <ApperIcon name="Award" size={24} className="text-primary-600" />
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-1">
-          {certification.name}
-        </h3>
-        <p className="text-sm text-gray-600">
-          {certification.issuingBody}
-        </p>
-      </div>
-
-      <div className="space-y-2 text-sm">
-        <div className="flex justify-between items-center">
-          <span className="text-gray-500">Certificate:</span>
-          <span className="font-mono text-xs text-gray-700">
-            {certification.number}
-          </span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-gray-500">Valid Until:</span>
-          <span className={`font-medium ${isExpiringSoon(certification.validUntil) ? 'text-warning' : 'text-success'}`}>
-            {formatDate(certification.validUntil)}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-4 pt-4 border-t border-gray-100">
-        <div className="flex items-center justify-center">
-          <ApperIcon 
-            name="CheckCircle2" 
-            size={16} 
-            className="text-success mr-2" 
-          />
-          <span className="text-sm font-medium text-success">Active</span>
+        
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {certification.name_c}
+          </h3>
+          
+          <div className="space-y-2 text-sm text-gray-600">
+            <div className="flex items-center">
+              <ApperIcon name="Building" size={14} className="mr-2 flex-shrink-0" />
+              <span className="truncate">{certification.issuing_body_c}</span>
+            </div>
+            
+            <div className="flex items-center">
+              <ApperIcon name="Hash" size={14} className="mr-2 flex-shrink-0" />
+              <span className="truncate">{certification.number_c}</span>
+            </div>
+            
+            <div className="flex items-center">
+              <ApperIcon name="Calendar" size={14} className="mr-2 flex-shrink-0" />
+              <span>Valid until {formatDate(certification.valid_until_c)}</span>
+              {isExpiringSoon(certification.valid_until_c) && (
+                <span className="ml-2 px-2 py-1 bg-warning/10 text-warning text-xs rounded-full">
+                  Expiring Soon
+                </span>
+              )}
+            </div>
+          </div>
+          
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center text-xs text-gray-500">
+              <ApperIcon name="Shield" size={12} className="mr-1" />
+              <span>Certified</span>
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>

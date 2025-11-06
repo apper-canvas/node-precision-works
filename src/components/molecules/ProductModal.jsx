@@ -8,7 +8,7 @@ import Badge from "@/components/atoms/Badge";
 const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
   const downloadSpecs = () => {
     try {
-      if (!product?.specifications) {
+if (!product?.specifications_c) {
         toast.error('No specifications available for this product');
         return;
       }
@@ -16,8 +16,9 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
       // Generate formatted specification content
       let specContent = `${product.name} - Technical Specifications\n`;
       specContent += `${'='.repeat(50)}\n\n`;
-      
-      const specs = product.specifications;
+const specs = typeof product.specifications_c === 'string' 
+        ? JSON.parse(product.specifications_c) 
+        : product.specifications_c;
       
       // Add all available specifications
       Object.entries(specs).forEach(([key, value]) => {
@@ -96,23 +97,22 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
                     <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 overflow-hidden">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
+<img
+                        src="/api/placeholder/400/300"
+                        alt={product.name_c}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     
-                    {product.images.length > 1 && (
-                      <div className="grid grid-cols-3 gap-2">
-                        {product.images.slice(1, 4).map((image, index) => (
-                          <div key={index} className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded overflow-hidden">
-                            <img
-                              src={image}
-                              alt={`${product.name} ${index + 2}`}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
+<div className="grid grid-cols-3 gap-2">
+                      {[1, 2, 3].map((index) => (
+                        <div key={index} className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded overflow-hidden">
+                          <img
+                            src="/api/placeholder/400/300"
+                            alt={`${product.name_c} ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                         ))}
                       </div>
                     )}
@@ -121,7 +121,7 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Description</h3>
-                      <p className="text-gray-600 leading-relaxed">{product.description}</p>
+<p className="text-gray-600 leading-relaxed">{product.description_c}</p>
                     </div>
 
                     <div>
@@ -129,7 +129,7 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
                       <div className="bg-gray-50 rounded-lg p-4">
                         <table className="w-full">
                           <tbody className="space-y-2">
-                            {Object.entries(product.specifications).map(([key, value]) => (
+{Object.entries(specs).map(([key, value]) => (
                               <tr key={key} className="border-b border-gray-200 last:border-b-0">
                                 <td className="py-2 text-sm font-medium text-gray-600 capitalize">
                                   {key.replace(/([A-Z])/g, " $1").trim()}:
@@ -147,9 +147,9 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Available Materials</h3>
                       <div className="flex flex-wrap gap-2">
-                        {product.materials.map((material, index) => (
+{product.materials_c.split(',').map((material, index) => (
                           <Badge key={index} variant="gray" size="sm">
-                            {material}
+                            {material.trim()}
                           </Badge>
                         ))}
                       </div>
@@ -160,7 +160,7 @@ const ProductModal = ({ product, isOpen, onClose, onRequestQuote }) => {
                         <ApperIcon name="Clock" size={16} className="text-primary-600 mr-2" />
                         <div>
                           <p className="text-sm font-medium text-primary-800">Lead Time</p>
-                          <p className="text-sm text-primary-700">{product.leadTime}</p>
+<p className="text-sm text-primary-700">{product.lead_time_c}</p>
                         </div>
                       </div>
                     </div>

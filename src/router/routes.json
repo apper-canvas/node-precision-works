@@ -1,0 +1,170 @@
+{
+  "/": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Homepage is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/products": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Products page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/capabilities": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Capabilities page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/quality": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Quality page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/about": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "About page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/contact": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Contact page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/insights": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Blog insights page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/insights/:id": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Individual blog posts are public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/login": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Login page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/signup": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Signup page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/callback": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Callback page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/error": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Error page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/reset-password/:appId/:fields": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Password reset page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/prompt-password/:appId/:emailAddress/:provider": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Password prompt page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  }
+}
