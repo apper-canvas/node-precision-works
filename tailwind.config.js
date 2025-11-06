@@ -1,0 +1,101 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f0f7ff',
+          100: '#e0efff',
+          200: '#bae1ff',
+          300: '#7ccbff',
+          400: '#36b0ff',
+          500: '#0892f0',
+          600: '#0073d1',
+          700: '#005ba8',
+          800: '#1a3a52',
+          900: '#164166',
+        },
+        secondary: {
+          50: '#f4f9fc',
+          100: '#e8f3f8',
+          200: '#cce6f0',
+          300: '#a1d0e4',
+          400: '#6eb5d4',
+          500: '#479bc6',
+          600: '#2c5f7f',
+          700: '#2a5272',
+          800: '#25475f',
+          900: '#1e3a4f',
+        },
+        accent: {
+          50: '#fef7f0',
+          100: '#fdeee0',
+          200: '#fad9be',
+          300: '#f6be90',
+          400: '#f1975b',
+          500: '#e67e22',
+          600: '#d86614',
+          700: '#b34e13',
+          800: '#8f3f17',
+          900: '#743516',
+        },
+        surface: '#ffffff',
+        background: '#f4f6f8',
+        success: '#27ae60',
+        warning: '#f39c12',
+        error: '#c0392b',
+        info: '#3498db',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'xs': '0.75rem',
+        'sm': '0.875rem',
+        'base': '1rem',
+        'lg': '1.125rem',
+        'xl': '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '1.875rem',
+        '4xl': '2.25rem',
+        '5xl': '3rem',
+        '6xl': '3.75rem',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '104': '26rem',
+        '120': '30rem',
+      },
+      boxShadow: {
+        'card': '0 2px 4px rgba(26, 58, 82, 0.08)',
+        'card-hover': '0 4px 8px rgba(26, 58, 82, 0.1)',
+        'button': '0 2px 4px rgba(230, 126, 34, 0.2)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+      },
+    },
+  },
+  plugins: [],
+}

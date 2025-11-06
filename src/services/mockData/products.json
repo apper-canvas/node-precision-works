@@ -1,0 +1,98 @@
+[
+  {
+    "Id": 1,
+    "name": "Precision Machined Components",
+    "category": "CNC Machining",
+    "description": "High-precision machined components for aerospace, automotive, and medical industries with tolerances up to ±0.0001\"",
+    "specifications": {
+      "tolerance": "±0.0001\" to ±0.005\"",
+      "surfaceFinish": "32 µin Ra or better",
+      "maxDimensions": "24\" x 18\" x 12\"",
+      "minFeatureSize": "0.010\""
+    },
+    "materials": ["Aluminum 6061-T6", "Stainless Steel 316L", "Titanium Ti-6Al-4V", "Inconel 718", "Tool Steel H13"],
+    "leadTime": "2-4 weeks",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/precision-components.pdf"
+  },
+  {
+    "Id": 2,
+    "name": "Custom Fabricated Assemblies",
+    "category": "Fabrication",
+    "description": "Welded and fabricated assemblies for industrial equipment, structural components, and specialized machinery",
+    "specifications": {
+      "maxSize": "120\" x 60\" x 48\"",
+      "weldingStandards": "AWS D1.1, AWS D17.1",
+      "materialThickness": "0.030\" to 2.0\"",
+      "finishOptions": "Powder coating, anodizing, painting"
+    },
+    "materials": ["Carbon Steel", "Stainless Steel 304/316", "Aluminum", "Brass", "Copper"],
+    "leadTime": "3-6 weeks",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/fabricated-assemblies.pdf"
+  },
+  {
+    "Id": 3,
+    "name": "Sheet Metal Stampings",
+    "category": "Stamping",
+    "description": "Progressive die stampings and deep drawn components for high-volume production applications",
+    "specifications": {
+      "materialThickness": "0.010\" to 0.250\"",
+      "blankSize": "Up to 12\" x 8\"",
+      "drawDepth": "Up to 4\"",
+      "tolerance": "±0.003\" typical"
+    },
+    "materials": ["Cold Rolled Steel", "Stainless Steel", "Aluminum", "Brass", "Copper"],
+    "leadTime": "4-8 weeks (includes tooling)",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/stampings.pdf"
+  },
+  {
+    "Id": 4,
+    "name": "Turned Components",
+    "category": "Turning",
+    "description": "Precision turned parts from prototype to high volume production with complex geometries and tight tolerances",
+    "specifications": {
+      "maxDiameter": "6\" (manual), 2.5\" (automatic)",
+      "maxLength": "12\"",
+      "tolerance": "±0.0005\"",
+      "surfaceFinish": "16 µin Ra"
+    },
+    "materials": ["Brass", "Aluminum", "Stainless Steel", "Carbon Steel", "Plastics"],
+    "leadTime": "1-3 weeks",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/turned-components.pdf"
+  },
+  {
+    "Id": 5,
+    "name": "Wire EDM Components",
+    "category": "EDM",
+    "description": "Complex geometries and tight tolerances achieved through wire electrical discharge machining",
+    "specifications": {
+      "maxThickness": "8\"",
+      "tolerance": "±0.0002\"",
+      "surfaceFinish": "32 µin Ra",
+      "maxWorkpiece": "20\" x 16\" x 8\""
+    },
+    "materials": ["Tool Steel", "Stainless Steel", "Titanium", "Inconel", "Carbide"],
+    "leadTime": "2-5 weeks",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/wire-edm.pdf"
+  },
+  {
+    "Id": 6,
+    "name": "Medical Device Components",
+    "category": "Medical",
+    "description": "FDA-compliant manufacturing for medical devices and surgical instruments with complete traceability",
+    "specifications": {
+      "compliance": "ISO 13485, FDA 21 CFR Part 820",
+      "materials": "USP Class VI certified",
+      "tolerance": "±0.0001\"",
+      "finish": "Electropolish available"
+    },
+    "materials": ["316L Stainless Steel", "Titanium", "PEEK", "Delrin", "Ultem"],
+    "leadTime": "3-6 weeks",
+    "images": ["/api/placeholder/400/300", "/api/placeholder/400/300"],
+    "technicalDrawing": "/drawings/medical-components.pdf"
+  }
+]

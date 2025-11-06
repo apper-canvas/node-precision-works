@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 1,
+    "name": "ISO 9001:2015",
+    "issuingBody": "Bureau Veritas",
+    "number": "BV-9001-2024-001",
+    "validUntil": "2027-06-15",
+    "logo": "/certifications/iso9001-logo.png"
+  },
+  {
+    "Id": 2,
+    "name": "AS9100D",
+    "issuingBody": "SAI Global",
+    "number": "AS9100-PW-2024-002",
+    "validUntil": "2027-03-20",
+    "logo": "/certifications/as9100d-logo.png"
+  },
+  {
+    "Id": 3,
+    "name": "ISO 13485:2016",
+    "issuingBody": "TUV SUD",
+    "number": "MD-13485-2024-003",
+    "validUntil": "2027-09-10",
+    "logo": "/certifications/iso13485-logo.png"
+  },
+  {
+    "Id": 4,
+    "name": "ITAR Registered",
+    "issuingBody": "U.S. Department of State",
+    "number": "M40047",
+    "validUntil": "2025-12-31",
+    "logo": "/certifications/itar-logo.png"
+  },
+  {
+    "Id": 5,
+    "name": "NIST 800-171",
+    "issuingBody": "Cybersecurity Maturity Model",
+    "number": "CMMC-L2-2024-005",
+    "validUntil": "2027-01-15",
+    "logo": "/certifications/nist-logo.png"
+  },
+  {
+    "Id": 6,
+    "name": "AWS D1.1 Certified",
+    "issuingBody": "American Welding Society",
+    "number": "AWS-D1.1-PW-006",
+    "validUntil": "2026-08-30",
+    "logo": "/certifications/aws-logo.png"
+  }
+]

@@ -1,0 +1,109 @@
+[
+  {
+    "Id": 1,
+    "name": "CNC Machining Centers",
+    "description": "State-of-the-art 3, 4, and 5-axis machining centers for complex geometries and high-precision work",
+    "equipment": [
+      "Haas VF-4SS (4-axis)",
+      "Mazak Integrex i-300S (5-axis)",
+      "Okuma Genos M560-V",
+      "DMG Mori NHX 4000 (5-axis)"
+    ],
+    "tolerances": {
+      "positional": "±0.0001\"",
+      "geometric": "±0.0002\"",
+      "surface": "16 µin Ra"
+    },
+    "capacity": "24/7 operations, 15 machines",
+    "materials": ["Aluminum", "Steel", "Stainless Steel", "Titanium", "Inconel", "Plastics"]
+  },
+  {
+    "Id": 2,
+    "name": "Precision Turning",
+    "description": "High-precision turning capabilities for cylindrical components from prototype to production volumes",
+    "equipment": [
+      "Citizen L32 Swiss Lathe",
+      "Mazak Quick Turn 250MSY",
+      "Okuma LB3000 EX II",
+      "Haas ST-30 CNC Lathe"
+    ],
+    "tolerances": {
+      "diameter": "±0.0005\"",
+      "length": "±0.001\"",
+      "roundness": "0.0002\""
+    },
+    "capacity": "Up to 6\" diameter, 12\" length",
+    "materials": ["Brass", "Aluminum", "Steel", "Stainless Steel", "Titanium"]
+  },
+  {
+    "Id": 3,
+    "name": "Wire EDM",
+    "description": "Wire electrical discharge machining for complex shapes and ultra-precise tolerances in hardened materials",
+    "equipment": [
+      "Mitsubishi MV2400R",
+      "Sodick AQ750L",
+      "Fanuc α-C600iA"
+    ],
+    "tolerances": {
+      "cutting": "±0.0002\"",
+      "surface": "32 µin Ra",
+      "straightness": "0.0001\"/inch"
+    },
+    "capacity": "20\" x 16\" x 8\" maximum workpiece",
+    "materials": ["Tool Steel", "Hardened Steel", "Carbide", "Inconel", "Titanium"]
+  },
+  {
+    "Id": 4,
+    "name": "Sheet Metal Fabrication",
+    "description": "Complete sheet metal fabrication including cutting, forming, welding, and finishing operations",
+    "equipment": [
+      "Amada EM-3610NT Turret Punch",
+      "Trumpf TruLaser 3030",
+      "Accurpress 717512 Press Brake",
+      "Miller Dynasty 350 TIG Welder"
+    ],
+    "tolerances": {
+      "cutting": "±0.005\"",
+      "forming": "±0.010\"",
+      "welding": "AWS D1.1 certified"
+    },
+    "capacity": "0.030\" to 0.500\" thickness, 60\" x 120\" sheets",
+    "materials": ["Carbon Steel", "Stainless Steel", "Aluminum", "Brass", "Copper"]
+  },
+  {
+    "Id": 5,
+    "name": "Quality Inspection",
+    "description": "Comprehensive quality control with advanced metrology equipment and certified inspection procedures",
+    "equipment": [
+      "Zeiss Contura G2 CMM",
+      "Keyence IM-8000 Vision System",
+      "Mitutoyo Crysta-Apex S574",
+      "GOM ATOS 3D Scanner"
+    ],
+    "tolerances": {
+      "measurement": "±0.00005\"",
+      "3Dscanning": "0.0001\" accuracy",
+      "vision": "0.00004\" repeatability"
+    },
+    "capacity": "24\" x 16\" x 12\" CMM envelope",
+    "materials": ["All materials measured and certified"]
+  },
+  {
+    "Id": 6,
+    "name": "Surface Finishing",
+    "description": "Complete finishing services including coating, plating, and surface treatment options",
+    "equipment": [
+      "Powder Coating Booth",
+      "Anodizing Line",
+      "Electroplating Tanks",
+      "Passivation Equipment"
+    ],
+    "tolerances": {
+      "coating": "0.001\" to 0.005\" thickness",
+      "anodizing": "Type II & III available",
+      "plating": "0.0002\" to 0.002\" thickness"
+    },
+    "capacity": "Parts up to 36\" x 24\" x 18\"",
+    "materials": ["Aluminum", "Steel", "Stainless Steel", "Brass", "Copper"]
+  }
+]
