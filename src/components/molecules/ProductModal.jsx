@@ -19,13 +19,21 @@ if (!product?.specifications_c) {
 const specs = typeof product.specifications_c === 'string' 
         ? (() => {
             try {
-              return JSON.parse(product.specifications_c);
+              // Check if the string looks like JSON (starts with { or [)
+              const trimmed = product.specifications_c.trim();
+              if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                return JSON.parse(product.specifications_c);
+              } else {
+                // Not JSON format, treat as plain text
+                return { specifications: product.specifications_c };
+              }
             } catch (error) {
               console.error('Failed to parse specifications JSON:', error);
-              return product.specifications_c;
+              // Return as plain text specification if JSON parsing fails
+              return { specifications: product.specifications_c };
             }
           })()
-        : product.specifications_c;
+        : (product.specifications_c || {});
       
       // Add all available specifications
       Object.entries(specs).forEach(([key, value]) => {
@@ -73,10 +81,18 @@ const specs = product?.specifications_c
     ? (typeof product.specifications_c === 'string' 
         ? (() => {
             try {
-              return JSON.parse(product.specifications_c);
+              // Check if the string looks like JSON (starts with { or [)
+              const trimmed = product.specifications_c.trim();
+              if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                return JSON.parse(product.specifications_c);
+              } else {
+                // Not JSON format, treat as plain text
+                return { specifications: product.specifications_c };
+              }
             } catch (error) {
               console.error('Failed to parse specifications JSON:', error);
-              return {};
+              // Return as plain text specification if JSON parsing fails
+              return { specifications: product.specifications_c };
             }
           })()
         : product.specifications_c)
