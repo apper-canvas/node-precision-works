@@ -114,7 +114,7 @@ const specs = typeof product.specifications_c === 'string'
                           />
                         </div>
                       ))}
-                      </div>
+                    </div>
                     )}
                   </div>
 
