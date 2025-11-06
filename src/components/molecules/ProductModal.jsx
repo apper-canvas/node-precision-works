@@ -113,7 +113,7 @@ const specs = typeof product.specifications_c === 'string'
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        ))}
+                      ))}
                       </div>
                     )}
                   </div>
