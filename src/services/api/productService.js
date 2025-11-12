@@ -28,6 +28,9 @@ export const productService = {
       if (!response?.data?.length) {
         return [];
       }
+      else {
+        console.error("Error fetching products:", response?.message);
+      }
       
       return response.data;
     } catch (error) {
